@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(pnpm --filter api add nodemailer)",
+      "Bash(pnpm --filter api add -D @types/nodemailer)",
+      "Bash(pnpm run:*)",
+      "Bash(pnpm exec:*)",
+      "Bash(netstat -ano)",
+      "Bash(tasklist /FI \"PID eq 33700\")",
+      "Bash(tasklist /FI \"PID eq 9404\")",
+      "Bash(curl -s -o /dev/null -w \"web:%{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"api:%{http_code}\\\\n\" http://localhost:4000/api/products)",
+      "Bash(curl -s -o /dev/null -w \"cms:%{http_code}\\\\n\" http://localhost:3001/)",
+      "Bash(curl -s -o /dev/null -w \"cms:%{http_code}\\\\n\" --max-time 8 http://localhost:3001/)",
+      "Bash(taskkill /F /PID 33700)",
+      "Bash(powershell -Command \"Stop-Process -Id 33700 -Force\")"
+    ]
+  }
+}

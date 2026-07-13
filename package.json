@@ -1,0 +1,32 @@
+{
+  "name": "shangtech-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "上科官网项目 - Monorepo架构",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:web\" \"npm run dev:cms\" \"npm run dev:api\"",
+    "dev:web": "npm run dev --workspace=web",
+    "dev:cms": "npm run dev --workspace=cms",
+    "dev:api": "npm run start:dev --workspace=api",
+    "build": "npm run build --workspace=web && npm run build --workspace=cms && npm run build --workspace=api",
+    "build:web": "npm run build --workspace=web",
+    "build:cms": "npm run build --workspace=cms",
+    "build:api": "npm run build --workspace=api",
+    "start": "concurrently \"npm run start:web\" \"npm run start:cms\" \"npm run start:api\"",
+    "start:web": "npm run start --workspace=web",
+    "start:cms": "npm run start --workspace=cms",
+    "start:api": "npm run start:prod --workspace=api",
+    "lint": "npm run lint --workspaces",
+    "test": "npm run test --workspaces"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: shangtech-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: shangtech_website
+      POSTGRES_USER: shangtech
+      POSTGRES_PASSWORD: shangtech123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U shangtech -d shangtech_website"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - shangtech-network
+
+  elasticsearch:
+    image: elasticsearch:8.10.2
+    container_name: shangtech-elasticsearch
+    restart: unless-stopped
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - xpack.security.enabled=false
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - shangtech-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: shangtech-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - shangtech-network
+
+  minio:
+    image: minio/minio:latest
+    container_name: shangtech-minio
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin123
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    networks:
+      - shangtech-network
+
+  init-db:
+    image: postgres:15-alpine
+    container_name: shangtech-init-db
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      PGHOST: postgres
+      PGUSER: shangtech
+      PGPASSWORD: shangtech123
+      PGDATABASE: shangtech_website
+    networks:
+      - shangtech-network
+
+networks:
+  shangtech-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  es_data:
+  redis_data:
+  minio_data:
