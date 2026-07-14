@@ -4,6 +4,13 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 
+const API_BASE = 'http://localhost:4000';
+const getImageUrl = (path: string) => {
+  if (!path) return '';
+  if (path.startsWith('http')) return path;
+  return API_BASE + path;
+};
+
 // Case数据结构
 interface Case {
   id: string;
@@ -111,7 +118,7 @@ export default function CaseDetailPage() {
               {caseData.clientLogoUrl && (
                 <div className="mb-6">
                   <img
-                    src={caseData.clientLogoUrl}
+                    src={getImageUrl(caseData.clientLogoUrl)}
                     alt={caseData.clientName}
                     className="h-12 md:h-16 object-contain"
                   />
@@ -133,7 +140,7 @@ export default function CaseDetailPage() {
                   {caseData.images.map((image, index) => (
                     <div key={index} className="aspect-video bg-[var(--bg-3)] rounded-[var(--radius-md)] overflow-hidden border border-[var(--line)]">
                       <img
-                        src={image}
+                        src={getImageUrl(image)}
                         alt={`${caseData.projectName} - 图片 ${index + 1}`}
                         className="w-full h-full object-cover"
                       />

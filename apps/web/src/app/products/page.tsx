@@ -3,6 +3,13 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+const API_BASE = 'http://localhost:4000';
+const getImageUrl = (path: string) => {
+  if (!path) return '';
+  if (path.startsWith('http')) return path;
+  return API_BASE + path;
+};
+
 // Product数据结构
 interface Product {
   id: string;
@@ -116,7 +123,7 @@ export default function ProductsPage() {
                   {product.images && product.images.length > 0 && (
                     <div className="h-48 bg-[var(--bg-3)] relative overflow-hidden">
                       <img
-                        src={product.images[0]}
+                        src={getImageUrl(product.images[0])}
                         alt={product.name}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />

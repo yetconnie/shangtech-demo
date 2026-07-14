@@ -177,7 +177,7 @@ export default function Home() {
   );
 
   return (
-    <main className="flex-1">
+    <main className="flex-1 -mt-[30px]">
       {/* Hero */}
       <section className="hero">
         <div className="container-custom">
@@ -446,17 +446,15 @@ export default function Home() {
                   </div>
                 ) : (
                   filteredInsights.map((insight) => (
-                    <a
+                    <Link
                       key={insight.id}
                       className="insight-card"
                       data-category={insight.category}
-                      href={insight.url || '#'}
-                      target={insight.url ? '_blank' : undefined}
-                      rel={insight.url ? 'noopener noreferrer' : undefined}
+                      href={`/insights/${insight.id}`}
                     >
                       <div
                         className={`insight-image ${categoryImageClass[insight.category] || 'tech-img'}`}
-                        style={insight.coverImage ? { backgroundImage: `url(${insight.coverImage})`, backgroundSize: 'cover' } : undefined}
+                        style={insight.coverImage ? { backgroundImage: `url(${API_BASE}${insight.coverImage})`, backgroundSize: 'cover' } : undefined}
                       ></div>
                       <div className="insight-content">
                         <span className="insight-cat">{categoryLabels[insight.category] || '洞察'}</span>
@@ -472,7 +470,7 @@ export default function Home() {
                           </div>
                         </div>
                       </div>
-                    </a>
+                    </Link>
                   ))
                 )}
               </div>

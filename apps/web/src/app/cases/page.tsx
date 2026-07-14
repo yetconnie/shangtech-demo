@@ -3,6 +3,13 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+const API_BASE = 'http://localhost:4000';
+const getImageUrl = (path: string) => {
+  if (!path) return '';
+  if (path.startsWith('http')) return path;
+  return API_BASE + path;
+};
+
 // Case数据结构
 interface Case {
   id: string;
@@ -125,7 +132,7 @@ export default function CasesPage() {
                   {caseItem.clientLogoUrl && (
                     <div className="h-32 bg-[var(--bg-3)] relative overflow-hidden flex items-center justify-center p-6">
                       <img
-                        src={caseItem.clientLogoUrl}
+                        src={getImageUrl(caseItem.clientLogoUrl)}
                         alt={caseItem.clientName}
                         className="max-w-full max-h-full object-contain"
                       />

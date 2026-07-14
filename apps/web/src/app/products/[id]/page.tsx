@@ -4,6 +4,13 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 
+const API_BASE = 'http://localhost:4000';
+const getImageUrl = (path: string) => {
+  if (!path) return '';
+  if (path.startsWith('http')) return path;
+  return API_BASE + path;
+};
+
 // Product数据结构
 interface Product {
   id: string;
@@ -116,7 +123,7 @@ export default function ProductDetailPage() {
                   {product.images.map((image, index) => (
                     <div key={index} className="aspect-video bg-[var(--bg-3)] rounded-[var(--radius-md)] overflow-hidden border border-[var(--line)]">
                       <img
-                        src={image}
+                        src={getImageUrl(image)}
                         alt={`${product.name} - 图片 ${index + 1}`}
                         className="w-full h-full object-cover"
                       />
@@ -249,22 +256,24 @@ export default function ProductDetailPage() {
                         相关文档
                       </h2>
                       <div className="space-y-3">
-                        {product.documents.map((document, index) => (
+                        {product.documents.map((docUrl, index) => {
+                          const fileName = docUrl.split('/').pop() || docUrl;
+                          return (
                           <a
                             key={index}
-                            href={document}
+                            href={getImageUrl(docUrl)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center p-3 rounded-[var(--radius-md)] border border-[var(--line)] bg-[var(--bg-3)] hover:border-[var(--cobalt)] transition-colors group"
                           >
-                            <svg className="w-5 h-5 text-[var(--cobalt-bright)] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            <svg className="w-5 h-5 text-[var(--cobalt-bright)] mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                             </svg>
-                            <span className="text-[var(--ink-2)] group-hover:text-[var(--cobalt-bright)] transition-colors">
-                              文档 {index + 1}
+                            <span className="text-[var(--ink-2)] group-hover:text-[var(--cobalt-bright)] transition-colors truncate">
+                              {fileName}
                             </span>
                           </a>
-                        ))}
+                        )})}
                       </div>
                     </div>
                   )}
