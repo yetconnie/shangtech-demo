@@ -7,6 +7,9 @@
     "apps/*"
   ],
   "scripts": {
+    "postinstall": "node scripts/setup.js",
+    "setup": "node scripts/setup.js",
+    "predev": "node -e \"try{require('concurrently')}catch(e){console.error('错误: 依赖未安装，请先运行 npm install');process.exit(1)}\"",
     "dev": "concurrently \"npm run dev:web\" \"npm run dev:cms\" \"npm run dev:api\"",
     "dev:web": "npm run dev --workspace=web",
     "dev:cms": "npm run dev --workspace=cms",

@@ -29,13 +29,13 @@ export class User {
   })
   role: 'admin' | 'editor';
 
-  @Column({ type: 'timestamp', name: 'last_login_at', nullable: true })
+  @Column({ type: 'datetime', name: 'last_login_at', nullable: true })
   lastLoginAt: Date;
 
-  @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
+  @CreateDateColumn({ type: 'datetime', name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
+  @UpdateDateColumn({ type: 'datetime', name: 'updated_at' })
   updatedAt: Date;
 
   @OneToMany(() => OperationLog, (log: OperationLog) => log.user)

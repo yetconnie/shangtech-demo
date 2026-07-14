@@ -46,16 +46,16 @@ export class Case {
   @Column({ type: 'text', nullable: true })
   implementation: string;
 
-  @Column({ type: 'jsonb', default: [] })
+  @Column({ type: 'simple-json', default: [] })
   results: CaseResult[];
 
   @Column({ type: 'text', name: 'client_testimonial', nullable: true })
   clientTestimonial: string;
 
-  @Column({ type: 'jsonb', default: [] })
+  @Column({ type: 'simple-json', default: [] })
   images: string[];
 
-  @Column({ type: 'jsonb', default: [] })
+  @Column({ type: 'simple-json', default: [] })
   videos: string[];
 
   @Column({
@@ -68,10 +68,10 @@ export class Case {
   @Column({ type: 'int', name: 'sort_order', default: 0 })
   sortOrder: number;
 
-  @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
+  @CreateDateColumn({ type: 'datetime', name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
+  @UpdateDateColumn({ type: 'datetime', name: 'updated_at' })
   updatedAt: Date;
 
   @ManyToMany(() => Product, (p: Product) => p.cases)

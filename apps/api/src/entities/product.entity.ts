@@ -22,19 +22,19 @@ export class Product {
   @Column({ type: 'text' })
   description: string;
 
-  @Column({ type: 'jsonb', default: [] })
+  @Column({ type: 'simple-json', default: [] })
   features: string[];
 
-  @Column({ type: 'jsonb', default: {}, name: 'technical_params' })
+  @Column({ type: 'simple-json', default: {}, name: 'technical_params' })
   technicalParams: Record<string, any>;
 
-  @Column({ type: 'jsonb', default: [], name: 'application_scenarios' })
+  @Column({ type: 'simple-json', default: [], name: 'application_scenarios' })
   applicationScenarios: string[];
 
-  @Column({ type: 'jsonb', default: [] })
+  @Column({ type: 'simple-json', default: [] })
   images: string[];
 
-  @Column({ type: 'jsonb', default: [] })
+  @Column({ type: 'simple-json', default: [] })
   documents: string[];
 
   @Column({
@@ -47,10 +47,10 @@ export class Product {
   @Column({ type: 'int', name: 'sort_order', default: 0 })
   sortOrder: number;
 
-  @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
+  @CreateDateColumn({ type: 'datetime', name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
+  @UpdateDateColumn({ type: 'datetime', name: 'updated_at' })
   updatedAt: Date;
 
   @ManyToMany(() => Case, (c: Case) => c.products)
