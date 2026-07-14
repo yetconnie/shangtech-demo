@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import ImageUploader from '@/components/ImageUploader';
+import FileUploader from '@/components/FileUploader';
 
 interface User {
   id: string;
@@ -21,6 +23,8 @@ export default function NewProductPage() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [images, setImages] = useState<string[]>([]);
+  const [documents, setDocuments] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -156,6 +160,8 @@ export default function NewProductPage() {
             return acc;
           }, {} as Record<string, string>),
         applicationScenarios: formData.applicationScenarios.filter(s => s.trim() !== ''),
+        images,
+        documents,
         status: formData.status,
       };
 
@@ -372,6 +378,14 @@ export default function NewProductPage() {
               >
                 + 添加场景
               </button>
+            </div>
+
+            <div>
+              <ImageUploader images={images} onChange={setImages} label="产品图片" />
+            </div>
+
+            <div>
+              <FileUploader files={documents} onChange={setDocuments} label="相关文档" />
             </div>
 
             <div>

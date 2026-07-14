@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
+import ImageUploader from '@/components/ImageUploader';
 
 interface Case {
   id: string;
@@ -16,6 +17,8 @@ interface Case {
   implementation: string;
   results: Array<{ metric: string; value: string; description: string }>;
   clientTestimonial: string;
+  images: string[];
+  videos: string[];
   status: 'draft' | 'published' | 'offline';
   createdAt: string;
   updatedAt: string;
@@ -43,6 +46,8 @@ export default function EditCasePage() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [images, setImages] = useState<string[]>([]);
+  const [videos, setVideos] = useState<string[]>([]);
 
   const [formData, setFormData] = useState({
     clientName: '',
@@ -106,6 +111,8 @@ export default function EditCasePage() {
         clientTestimonial: caseItem.clientTestimonial || '',
         status: caseItem.status || 'draft',
       });
+      setImages(Array.isArray(caseItem.images) ? caseItem.images : []);
+      setVideos(Array.isArray(caseItem.videos) ? caseItem.videos : []);
     } catch (err) {
       console.error('Failed to fetch case:', err);
       setError('加载案例信息失败');
@@ -133,6 +140,8 @@ export default function EditCasePage() {
         implementation: formData.implementation,
         results: formData.results.filter(r => r.metric.trim() !== '' || r.value.trim() !== ''),
         clientTestimonial: formData.clientTestimonial,
+        images,
+        videos,
         status: formData.status,
       };
 
@@ -474,6 +483,14 @@ export default function EditCasePage() {
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0047AB] focus:border-transparent resize-none"
                 placeholder="请输入客户评价"
               />
+            </div>
+
+            <div>
+              <ImageUploader images={images} onChange={setImages} label="案例图片" />
+            </div>
+
+            <div>
+              <ImageUploader images={videos} onChange={setVideos} label="案例视频" />
             </div>
 
             <div>

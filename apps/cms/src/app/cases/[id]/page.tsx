@@ -4,6 +4,13 @@ import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 
+const API_BASE = 'http://localhost:4000';
+const getImageUrl = (path: string) => {
+  if (!path) return '';
+  if (path.startsWith('http')) return path;
+  return API_BASE + path;
+};
+
 interface Case {
   id: string;
   clientName: string;
@@ -16,6 +23,8 @@ interface Case {
   implementation: string;
   results: Array<{ metric: string; value: string; description: string }>;
   clientTestimonial: string;
+  images: string[];
+  videos: string[];
   status: 'draft' | 'published' | 'offline';
   createdAt: string;
   updatedAt: string;
@@ -354,7 +363,7 @@ export default function CaseDetailPage() {
                 <label className="block text-sm font-medium text-gray-600 mb-1">客户Logo</label>
                 {caseItem.clientLogoUrl ? (
                   <img 
-                    src={caseItem.clientLogoUrl} 
+                    src={getImageUrl(caseItem.clientLogoUrl)}
                     alt="客户Logo" 
                     className="max-w-xs h-auto rounded-md"
                   />
@@ -448,6 +457,24 @@ export default function CaseDetailPage() {
               <p className="text-gray-500 text-center py-4">暂无客户评价</p>
             )}
           </div>
+
+          {/* 案例图片 */}
+          {caseItem.images && caseItem.images.length > 0 && (
+            <div className="bg-white rounded-lg shadow-md p-6 lg:col-span-2">
+              <h3 className="text-lg font-bold text-gray-800 mb-4 pb-2 border-b">案例图片</h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {caseItem.images.map((image, index) => (
+                  <div key={index} className="aspect-video bg-gray-100 rounded-lg overflow-hidden border border-gray-200">
+                    <img
+                      src={getImageUrl(image)}
+                      alt={`${caseItem.projectName} - 图片 ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </main>
     </div>

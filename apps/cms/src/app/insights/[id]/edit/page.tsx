@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
+import ImageUploader from '@/components/ImageUploader';
 import apiClient from '@/lib/api';
 
 interface User {
@@ -33,6 +34,7 @@ export default function EditInsightPage() {
   const [user, setUser] = useState<User | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [coverImage, setCoverImage] = useState<string[]>([]);
   const [formData, setFormData] = useState<InsightForm>({
     title: '',
     summary: '',
@@ -84,6 +86,7 @@ export default function EditInsightPage() {
         authorAvatar: data.authorAvatar || '',
         sortOrder: data.sortOrder || 0,
       });
+      setCoverImage(data.coverImage ? [data.coverImage] : []);
     } catch (err) {
       console.error('Failed to fetch insight:', err);
       alert('获取洞察详情失败');
@@ -126,6 +129,7 @@ export default function EditInsightPage() {
 
       const payload = {
         ...formData,
+        coverImage: coverImage.length > 0 ? coverImage[0] : null,
         sortOrder: Number(formData.sortOrder),
       };
 
@@ -251,14 +255,7 @@ export default function EditInsightPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">封面图片 URL</label>
-            <input
-              type="text"
-              value={formData.coverImage}
-              onChange={(e) => handleInputChange('coverImage', e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-3 py-2"
-              placeholder="https://example.com/image.jpg"
-            />
+            <ImageUploader images={coverImage} onChange={setCoverImage} label="封面图片" multiple={false} />
           </div>
 
           <div>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import ImageUploader from '@/components/ImageUploader';
 import apiClient from '@/lib/api';
 
 interface User {
@@ -16,6 +17,7 @@ export default function NewInsightPage() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [coverImage, setCoverImage] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     title: '',
     summary: '',
@@ -74,6 +76,7 @@ export default function NewInsightPage() {
 
       const payload = {
         ...formData,
+        coverImage: coverImage.length > 0 ? coverImage[0] : null,
         sortOrder: Number(formData.sortOrder),
       };
 
@@ -199,14 +202,7 @@ export default function NewInsightPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">封面图片 URL</label>
-            <input
-              type="text"
-              value={formData.coverImage}
-              onChange={(e) => handleInputChange('coverImage', e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-3 py-2"
-              placeholder="https://example.com/image.jpg"
-            />
+            <ImageUploader images={coverImage} onChange={setCoverImage} label="封面图片" multiple={false} />
           </div>
 
           <div>

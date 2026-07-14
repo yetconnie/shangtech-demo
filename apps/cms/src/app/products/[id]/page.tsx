@@ -4,6 +4,13 @@ import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 
+const API_BASE = 'http://localhost:4000';
+const getImageUrl = (path: string) => {
+  if (!path) return '';
+  if (path.startsWith('http')) return path;
+  return API_BASE + path;
+};
+
 interface Product {
   id: string;
   name: string;
@@ -11,6 +18,8 @@ interface Product {
   features: string[];
   technicalParams: Record<string, string>;
   applicationScenarios: string[];
+  images: string[];
+  documents: string[];
   status: 'draft' | 'published' | 'offline';
   createdAt: string;
   updatedAt: string;
@@ -403,6 +412,57 @@ export default function ProductDetailPage() {
               </ul>
             ) : (
               <p className="text-gray-500 text-center py-4">暂无应用场景</p>
+            )}
+          </div>
+
+          {/* 产品图片 */}
+          <div className="bg-white rounded-lg shadow-md p-6 lg:col-span-2">
+            <h3 className="text-lg font-bold text-gray-800 mb-4 pb-2 border-b">产品图片</h3>
+            {product.images && product.images.length > 0 ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {product.images.map((image, index) => (
+                  <div key={index} className="aspect-video bg-gray-100 rounded-lg overflow-hidden border border-gray-200">
+                    <img
+                      src={getImageUrl(image)}
+                      alt={`${product.name} - 图片 ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 text-center py-4">暂无产品图片</p>
+            )}
+          </div>
+
+          {/* 相关文档 */}
+          <div className="bg-white rounded-lg shadow-md p-6 lg:col-span-2">
+            <h3 className="text-lg font-bold text-gray-800 mb-4 pb-2 border-b">相关文档</h3>
+            {product.documents && product.documents.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {product.documents.map((doc, index) => {
+                  const fileName = doc.split('/').pop() || doc;
+                  return (
+                    <a
+                      key={index}
+                      href={`http://localhost:4000${doc}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 p-3 bg-gray-50 border border-gray-200 rounded-md hover:border-[#0047AB] hover:bg-blue-50 transition-colors group"
+                    >
+                      <svg className="w-5 h-5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                      </svg>
+                      <span className="text-sm text-[#0047AB] group-hover:underline truncate">{fileName}</span>
+                      <svg className="w-4 h-4 text-gray-400 ml-auto flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      </svg>
+                    </a>
+                  );
+                })}
+              </div>
+            ) : (
+              <p className="text-gray-500 text-center py-4">暂无相关文档</p>
             )}
           </div>
         </div>

@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
+import ImageUploader from '@/components/ImageUploader';
+import FileUploader from '@/components/FileUploader';
 
 interface Product {
   id: string;
@@ -11,6 +13,8 @@ interface Product {
   features: string[];
   technicalParams: Record<string, string>;
   applicationScenarios: string[];
+  images: string[];
+  documents: string[];
   status: 'draft' | 'published' | 'offline';
   createdAt: string;
 }
@@ -40,6 +44,9 @@ export default function EditProductPage() {
     applicationScenarios: '',
     status: 'draft' as 'draft' | 'published' | 'offline',
   });
+
+  const [images, setImages] = useState<string[]>([]);
+  const [documents, setDocuments] = useState<string[]>([]);
 
   useEffect(() => {
     const token = localStorage.getItem('auth_token');
@@ -86,6 +93,8 @@ export default function EditProductPage() {
           : '',
         status: product.status || 'draft',
       });
+      setImages(Array.isArray(product.images) ? product.images : []);
+      setDocuments(Array.isArray(product.documents) ? product.documents : []);
     } catch (err) {
       console.error('Failed to fetch product:', err);
       setError('加载产品信息失败');
@@ -135,6 +144,8 @@ export default function EditProductPage() {
           features,
           technicalParams,
           applicationScenarios,
+          images,
+          documents,
           status: formData.status,
         }),
       });
@@ -331,6 +342,14 @@ export default function EditProductPage() {
                 placeholder="每行输入一个应用场景，例如：&#10;工业自动化&#10;智能家居&#10;智慧城市"
               />
               <p className="mt-1 text-sm text-gray-500">每行输入一个应用场景</p>
+            </div>
+
+            <div>
+              <ImageUploader images={images} onChange={setImages} label="产品图片" />
+            </div>
+
+            <div>
+              <FileUploader files={documents} onChange={setDocuments} label="相关文档" />
             </div>
 
             <div>
