@@ -3,6 +3,11 @@ node_modules/
 .pnp
 .pnp.js
 
+# Lockfiles (项目使用npm，忽略其他包管理器的lockfile)
+pnpm-lock.yaml
+pnpm-workspace.yaml
+yarn.lock
+
 # Testing
 coverage/
 

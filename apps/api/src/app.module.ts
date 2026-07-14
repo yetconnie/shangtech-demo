@@ -2,18 +2,18 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { databaseConfig } from './config/database.config';
-import { storageConfig } from './config/storage.config';
 import { AuthModule } from './modules/auth/auth.module';
 import { ProductsModule } from './modules/products/products.module';
 import { CasesModule } from './modules/cases/cases.module';
 import { InsightsModule } from './modules/insights/insights.module';
 import { InquiriesModule } from './modules/inquiries/inquiries.module';
+import { UploadModule } from './modules/upload/upload.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [databaseConfig, storageConfig],
+      load: [databaseConfig],
       envFilePath: ['../../.env', '.env'],
     }),
 
@@ -48,6 +48,7 @@ import { InquiriesModule } from './modules/inquiries/inquiries.module';
     CasesModule,
     InsightsModule,
     InquiriesModule,
+    UploadModule,
   ],
   controllers: [],
   providers: [],

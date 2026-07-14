@@ -46,16 +46,16 @@ export class Case {
   @Column({ type: 'text', nullable: true })
   implementation: string;
 
-  @Column({ type: 'simple-json', default: [] })
+  @Column({ type: 'simple-json', nullable: true })
   results: CaseResult[];
 
   @Column({ type: 'text', name: 'client_testimonial', nullable: true })
   clientTestimonial: string;
 
-  @Column({ type: 'simple-json', default: [] })
+  @Column({ type: 'simple-json', nullable: true })
   images: string[];
 
-  @Column({ type: 'simple-json', default: [] })
+  @Column({ type: 'simple-json', nullable: true })
   videos: string[];
 
   @Column({

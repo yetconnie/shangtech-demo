@@ -11,7 +11,7 @@ export const databaseConfig = registerAs('database', () => {
       type,
       database: process.env.DATABASE_PATH || './data/shangtech.db',
       synchronize: process.env.NODE_ENV === 'development',
-      logging: process.env.NODE_ENV === 'development',
+      logging: false,
     };
   }
 
@@ -24,6 +24,6 @@ export const databaseConfig = registerAs('database', () => {
     password: process.env.DATABASE_PASSWORD || 'your_password_here',
     database: process.env.DATABASE_NAME || 'shangtech_website',
     synchronize: process.env.NODE_ENV === 'development',
-    logging: process.env.NODE_ENV === 'development',
+    logging: false,
   };
 });

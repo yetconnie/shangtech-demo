@@ -22,19 +22,19 @@ export class Product {
   @Column({ type: 'text' })
   description: string;
 
-  @Column({ type: 'simple-json', default: [] })
+  @Column({ type: 'simple-json', nullable: true })
   features: string[];
 
-  @Column({ type: 'simple-json', default: {}, name: 'technical_params' })
+  @Column({ type: 'simple-json', nullable: true, name: 'technical_params' })
   technicalParams: Record<string, any>;
 
-  @Column({ type: 'simple-json', default: [], name: 'application_scenarios' })
+  @Column({ type: 'simple-json', nullable: true, name: 'application_scenarios' })
   applicationScenarios: string[];
 
-  @Column({ type: 'simple-json', default: [] })
+  @Column({ type: 'simple-json', nullable: true })
   images: string[];
 
-  @Column({ type: 'simple-json', default: [] })
+  @Column({ type: 'simple-json', nullable: true })
   documents: string[];
 
   @Column({
