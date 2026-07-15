@@ -60,3 +60,16 @@ public/uploads/
 
 # OS
 Thumbs.db
+
+# Claude / OMC
+.claude/
+.omc/
+
+# Trellis auto-generated / workspace state
+.trellis/.template-hashes.json
+.trellis/.version
+.trellis/workspace/
+
+# SQLite write-ahead log files
+*.db-shm
+*.db-wal
