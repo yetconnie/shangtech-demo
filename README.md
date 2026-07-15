@@ -99,7 +99,7 @@ NEXT_PUBLIC_API_URL=http://localhost:4000
 NEXT_PUBLIC_CMS_API_URL=http://localhost:4000
 ```
 
-数据库文件 `shangtech.db` 会在首次启动 API 时自动创建（TypeORM `synchronize` 已开启）。
+数据库文件 `apps/api/data/shangtech.db` 已预置在仓库中，包含完整的种子数据，拉取即可用，无需额外初始化。
 
 **可选：使用 PostgreSQL + 基础设施服务**：
 
@@ -139,7 +139,7 @@ npm run dev
 [2] [Nest] TypeOrmModule connected       ← 数据库连接成功
 ```
 
-> API 默认使用 SQLite，首次启动会在 `apps/api/data/shangtech.db` 自动创建数据库文件。如果报 `Could not locate the bindings file`，说明 `better-sqlite3` 原生绑定未编译，参考[常见问题](#常见问题)。
+> 数据库文件 `apps/api/data/shangtech.db` 已预置完整种子数据，API 启动后直接可用。如果报 `Could not locate the bindings file`，说明 `better-sqlite3` 原生绑定未编译，参考[常见问题](#常见问题)。
 
 也可以单独启动：
 
