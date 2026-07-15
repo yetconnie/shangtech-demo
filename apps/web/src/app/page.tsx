@@ -452,10 +452,6 @@ export default function Home() {
                       data-category={insight.category}
                       href={`/insights/${insight.id}`}
                     >
-                      <div
-                        className={`insight-image ${categoryImageClass[insight.category] || 'tech-img'}`}
-                        style={insight.coverImage ? { backgroundImage: `url(${API_BASE}${insight.coverImage})`, backgroundSize: 'cover' } : undefined}
-                      ></div>
                       <div className="insight-content">
                         <span className="insight-cat">{categoryLabels[insight.category] || '洞察'}</span>
                         <h3>{insight.title}</h3>
