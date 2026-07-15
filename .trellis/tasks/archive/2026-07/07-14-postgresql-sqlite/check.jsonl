@@ -1,0 +1,4 @@
+{"file": ".trellis/tasks/07-14-postgresql-sqlite/prd.md", "reason": "验收标准：自动创建 sqlite 文件、同步建表成功、API CRUD 可用"}
+{"file": ".trellis/spec/api/backend/index.md", "reason": "Backend 规范索引，用于验证代码变更符合项目约定的检查点"}
+{"file": ".trellis/spec/api/backend/quality-guidelines.md", "reason": "质量规范检查点，验证代码变更无禁止模式"}
+{"file": ".trellis/spec/guides/index.md", "reason": "跨层一致性检查，确保 Entity/Module/Config 三层变更协调一致"}

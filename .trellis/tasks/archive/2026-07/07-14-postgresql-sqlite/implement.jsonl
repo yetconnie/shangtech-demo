@@ -1,0 +1,4 @@
+{"file": ".trellis/tasks/07-14-postgresql-sqlite/prd.md", "reason": "核心需求文档：PostgreSQL → SQLite 迁移的完整变更范围、Entity 适配细节、验收标准"}
+{"file": ".trellis/spec/api/backend/index.md", "reason": "Backend 开发规范索引，包含数据库指南、错误处理等规范的引用"}
+{"file": ".trellis/spec/api/backend/database-guidelines.md", "reason": "数据库规范（虽为模板，但提供 TypeORM 迁移时应关注的结构化检查点）"}
+{"file": ".trellis/spec/guides/index.md", "reason": "跨层思考指南索引，数据库类型变更涉及 Entity → Module → Config 跨层影响"}
