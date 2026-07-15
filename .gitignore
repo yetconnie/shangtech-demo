@@ -51,7 +51,6 @@ logs/
 *.log
 
 # Database
-*.db
 *.sqlite
 
 # Uploads
