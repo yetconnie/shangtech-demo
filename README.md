@@ -53,7 +53,7 @@ shangtech-website/
 ### 2. 克隆项目
 
 ```bash
-git clone https://github.com/y574444354/shangtech-demo.git
+git clone https://github.com/yetconnie/shangtech-demo
 cd shangtech-demo
 ```
 
