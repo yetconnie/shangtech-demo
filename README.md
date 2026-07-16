@@ -161,7 +161,7 @@ npm run dev:api    # 仅 API 服务
 
 | 字段 | 值 |
 |------|-----|
-| 邮箱 | admin@shangtech.com |
+| 邮箱 | admin |
 | 密码 | admin123 |
 
 > 如果使用 PostgreSQL Docker 环境，管理员账号会通过 `database/seed-admin.sql` 自动创建。
